@@ -1,0 +1,294 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.App {
+  text-align: center;
+  background: url('https://images.pexels.com/photos/101808/pexels-photo-101808.jpeg') no-repeat center center fixed;
+  background-size: cover;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.App-title {
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  background-color: #21a1f1;
+  color: rgb(0, 0, 0);
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+.text-white {
+  color: white !important;
+}
+
+p {
+  font-size: 1.2rem;
+  margin-bottom: 40px;
+}
+
+.cta-button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  color: #282c34;
+  background-color: #61dafb;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.cta-button:hover {
+  background-color: #21a1f1;
+}
+
+/* Features section */
+.container {
+  padding: 20px;
+}
+
+.card {
+  background-color: transparent;
+  margin-bottom: 20px;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-body {
+  background-color: rgba(255, 255, 255, 0.7); /* Optional: Add a slight white background with transparency */
+  border-radius: 5px;
+  padding: 15px;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.card-img-top {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+
+.card-title {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.card-text {
+  font-size: 1rem;
+}
+
+/* Ensure the features stay horizontal even on smaller screens */
+@media (max-width: 768px) {
+  .row {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  }
+
+  .col-md-4 {
+    flex: 0 0 auto;
+    width: 80%;
+    max-width: none;
+    margin-right: 15px;
+  }
+}
+.carousel-img {
+  height: 400px; /* Set your desired height */
+  object-fit: cover; /* Ensures the image covers the entire area */
+  width: 100%; /* Ensures the image spans the full width */
+}
+/* Dashboard.css */
+
+.dashboard {
+  font-family: Arial, sans-serif;
+}
+
+.sidebar {
+  padding: 20px;
+  height: 100vh; /* Full height */
+}
+
+.sidebar h5 {
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.nav-link {
+  color: #aad2fa;
+  padding: 10px 15px;
+  margin-bottom: 5px;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.nav-link:hover {
+  background-color: #9dc6ef; /* Darker shade of the sidebar background */
+}
+
+.nav-link.active {
+  background-color: #b49393; /* Highlight active link */
+  color: #ffffff;
+}
+
+.content {
+  padding: 20px;
+}
+
+.card {
+  border-radius: 10px;
+}
+
+.card-title {
+  font-size: 1.25rem;
+}
+
+.card-text {
+  font-size: 1rem;
+}
+
+.sidebar .nav-link {
+  color: #a69bd4; /* Change this to your desired text color */
+}
+
+/* Add this CSS to your component or a separate CSS file */
+.login-container {
+  display: flex;
+  height: 100vh;
+}
+
+.login-background-half {
+  flex: 1;
+  background: url('https://images.pexels.com/photos/2462015/pexels-photo-2462015.jpeg') no-repeat center center fixed;
+  background-size: cover;
+}
+
+.login-form-half {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.85); /* Optional: add some transparency */
+  padding: 2rem;
+}
+
+.login-form-container {
+  max-width: 400px;
+  width: 100%;
+  padding: 2rem;
+  background-color: rgba(255, 255, 255, 0.85);
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.header {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #343a40; /* Example background color */
+  color: #fff;
+  padding: 10px;
+  z-index: 1050;
+}
+
+.layout {
+  display: flex;
+  margin-top: 60px; /* Adjust based on header height */
+}
+
+.admin-sidebar {
+  width: 250px; /* Adjust width as needed */
+  background-color: #f8f9fa; /* Example background color */
+  padding: 20px;
+  height: calc(100vh - 60px); /* Adjust based on header height */
+  overflow-y: auto;
+}
+
+.main-content {
+  flex: 1;
+  padding: 20px;
+  overflow: auto;
+}
+
+.container {
+  padding-top: 20px; /* Space below the header */
+}
+
+/* BillingCalculator.css */
+.form-container {
+  max-width: 500px;
+  margin: auto;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9;
+}
+
+.form-container h1 {
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.form-container .form-control {
+  border-radius: 4px;
+}
+
+.form-container .btn-primary {
+  background-color: #007bff;
+  border: none;
+  border-radius: 4px;
+  padding: 10px;
+  font-size: 1rem;
+}
+
+.form-container .btn-primary:hover {
+  background-color: #0056b3;
+}
+
+.alert {
+  border-radius: 4px;
+}
+
+.result-container {
+  height: 50vh; /* Occupy half of the viewport height */
+  overflow-y: auto; /* Allow scrolling if content overflows */
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.calcu {
+  background-color: #d9e4f061;
+}
+.calcubody {
+  background-color: #1acb8ab7;
+}
+.header {
+  background-color: #1acb8ab7;
+}
+/* Dashboard.css */

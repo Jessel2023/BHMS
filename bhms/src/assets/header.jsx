@@ -1,48 +1,29 @@
 import React from 'react';
-import { Navbar, Nav, Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 const Header = () => {
   return (
-    <Navbar expand="lg" bg="dark" variant="dark" fixed="top">
-      <Container>
-        {/* Brand Logo */}
-        <Navbar.Brand as={Link} to="/" className="fw-bold fs-3">BoarderFlow</Navbar.Brand>
+    <nav className="bg-black text-white py-4">
+      <div className="container mx-auto flex items-center justify-between">
+        {/* Title on the left */}
+        <span className="text-xl font-semibold">BoarderFlow</span>
 
-        {/* Navbar Toggle for mobile view */}
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-
-        {/* Navbar Collapse with navigation links */}
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="ms-auto">
-            {/* Home Link */}
-            <Nav.Link as={Link} to="/" className="nav-link text-white">
-              Home
-            </Nav.Link>
-
-            {/* Features Link */}
-            <Nav.Link href="#features" className="nav-link text-white">
-              Features
-            </Nav.Link>
-
-            {/* About Link */}
-            <Nav.Link href="#about" className="nav-link text-white">
-              Calculator
-            </Nav.Link>
-
-            {/* Contact Link */}
-            <Nav.Link href="#contact" className="nav-link text-white">
-              Contact
-            </Nav.Link>
-
-            {/* Login Link */}
-            <Nav.Link as={Link} to="/login" className="nav-link text-white">
-              Login
-            </Nav.Link>
-          </Nav>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
+        {/* Centered nav links */}
+        <div className="flex-1 flex justify-center">
+          <ul className="flex space-x-6 items-center">
+          <li>
+              <Link to="/" className="hover:text-gray-400">Home</Link>
+            </li>
+            <li><a href="#features" className="hover:text-gray-400">Features</a></li>
+            <li><a href="#calculator" className="hover:text-gray-400">Calculator</a></li>
+            <li><a href="#contact" className="hover:text-gray-400">Contact</a></li>
+            <li>
+              <Link to="/login" className="hover:text-gray-400">Login</Link>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
   );
 };
 

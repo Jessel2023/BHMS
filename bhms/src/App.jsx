@@ -4,6 +4,7 @@ import { Routes, Route, BrowserRouter } from 'react-router-dom'; // Import Brows
 import Login from './pages/login';
 import Home from './pages/home';
 import AdminDashboard from './pages/adminPages/admindashboard';
+import AdminCalc from './pages/adminPages/admincalc';
 
 function App() {
   return (
@@ -12,6 +13,9 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/admindashboard" element={<AdminDashboard />} />
+        <Route path="/adminsidebar" element={<AdminDashboard />} />
+        <Route path="/calculatorA" element={<AdminCalc />} />
+
         {/* Add more routes as needed */}
       </Routes>
     </BrowserRouter>

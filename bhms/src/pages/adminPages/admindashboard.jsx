@@ -1,19 +1,33 @@
 import React, { useState } from 'react';
 import AdminHeader from './adminheader';
 import AdminSidebar from './adminsidebar';
-import { Route } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { Users, BarChart3, Settings, Home, FileText, ClipboardList, Sliders } from 'lucide-react';
 
 const AdminDashboard = () => {
   const [showSidebar, setShowSidebar] = useState(true);
+  const navigate = useNavigate();
+
+  const DashboardCard = ({ title, subtitle, description, icon: Icon, borderColor, buttonColor, navigateTo }) => (
+    <div className={` border ${borderColor} rounded-2xl shadow-md p-6 hover:shadow-lg transition`}>
+      <div className={`flex items-center gap-2 text-lg font-semibold ${borderColor.replace('border', 'text')} mb-2`}>
+        <Icon className="w-5 h-5" />
+        {title}
+      </div>
+      <h5 className="text-xl font-bold mb-2">{subtitle}</h5>
+      <p className="text-gray-300 mb-4">{description}</p>
+      <button
+        onClick={() => navigate(navigateTo)}
+        className={`${buttonColor} px-4 py-2 rounded transition text-white`}
+      >
+        Go to {title}
+      </button>
+    </div>
+  );
 
   return (
     <div className="relative min-h-screen flex bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
-      {/* Background Image */}
-      <div
-        className="fixed inset-0 bg-cover bg-center bg-dark-100 z-10"
-      />
-
-      {/* Sidebar - No space between this and content */}
+      {/* Sidebar */}
       <div className="fixed h-full w-64 z-20">
         <AdminSidebar
           showSidebar={showSidebar}
@@ -28,44 +42,73 @@ const AdminDashboard = () => {
           <AdminHeader onMenuClick={() => setShowSidebar(true)} />
         </div>
 
-        {/* Main Content Area */}
+        {/* Dashboard Cards */}
         <main className="pt-20 px-6 max-w-7xl mx-auto w-full">
-          <h1 className="text-3xl font-bold text-teal-500 text-center mb-10">Admin Dashboard</h1>
-
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {/* Users Card */}
-            <div className="bg-[#111827] border border-green-500 rounded-2xl shadow-md p-6 hover:shadow-green-500/40 transition">
-              <h2 className="text-lg font-semibold text-green-300 mb-2">👥 Users</h2>
-              <h5 className="text-xl font-bold mb-2">Manage Users</h5>
-              <p className="text-gray-300 mb-4">View, add, or remove users from the system.</p>
-              <button className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded transition">
-                Go to Users
-              </button>
-            </div>
+            <DashboardCard
+              title="Users"
+              subtitle="Manage Users"
+              description="View, add, or remove users from the system."
+              icon={Users}
+              borderColor="border-green-500"
+              buttonColor="bg-green-600 hover:bg-green-700"
+              navigateTo="/admin/users"
+            />
 
-            {/* Reports Card */}
-            <div className="bg-[#111827] border border-yellow-400 rounded-2xl shadow-md p-6 hover:shadow-yellow-400/40 transition">
-              <h2 className="text-lg font-semibold text-yellow-300 mb-2">📊 Reports</h2>
-              <h5 className="text-xl font-bold mb-2">View Reports</h5>
-              <p className="text-gray-300 mb-4">Access detailed system reports and analytics.</p>
-              <button className="bg-yellow-400 hover:bg-yellow-500 text-black px-4 py-2 rounded transition">
-                View Reports
-              </button>
-            </div>
+            <DashboardCard
+              title="Calculator"
+              subtitle="Billing Calculator"
+              description="Quickly calculate tenant power usage."
+              icon={BarChart3}
+              borderColor="border-yellow-400"
+              buttonColor="bg-yellow-400 hover:bg-yellow-500 text-black"
+              navigateTo="/admin/calc"
+            />
 
-            {/* Settings Card */}
-            <div className="bg-[#111827] border border-red-500 rounded-2xl shadow-md p-6 hover:shadow-red-500/40 transition">
-              <h2 className="text-lg font-semibold text-red-300 mb-2">⚙️ Settings</h2>
-              <h5 className="text-xl font-bold mb-2">System Settings</h5>
-              <p className="text-gray-300 mb-4">Configure system preferences and settings.</p>
-              <button className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded transition">
-                Go to Settings
-              </button>
-            </div>
+            <DashboardCard
+              title="Boarders"
+              subtitle="Boarder's Info"
+              description="Manage and update boarder records."
+              icon={ClipboardList}
+              borderColor="border-blue-500"
+              buttonColor="bg-blue-600 hover:bg-blue-700"
+              navigateTo="/admin/boarders"
+            />
+
+            <DashboardCard
+              title="Rooms"
+              subtitle="Room Management"
+              description="Add, edit, or delete rooms."
+              icon={Home}
+              borderColor="border-purple-500"
+              buttonColor="bg-purple-600 hover:bg-purple-700"
+              navigateTo="/admin/rooms"
+            />
+
+            <DashboardCard
+              title="Bills"
+              subtitle="Manage Bills"
+              description="Generate and update tenant billing."
+              icon={FileText}
+              borderColor="border-pink-500"
+              buttonColor="bg-pink-600 hover:bg-pink-700"
+              navigateTo="/admin/bills"
+            />
+
+            <DashboardCard
+              title="Settings"
+              subtitle="System Settings"
+              description="Configure system preferences."
+              icon={Sliders}
+              borderColor="border-red-500"
+              buttonColor="bg-red-600 hover:bg-red-700"
+              navigateTo="/admin/settings"
+            />
           </div>
         </main>
       </div>
     </div>
+
   );
 };
 

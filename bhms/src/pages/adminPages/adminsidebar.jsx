@@ -16,7 +16,7 @@ import AdminHeader from './adminheader';
 const navItems = [
   { name: 'Dashboard', href: '/admindashboard', icon: HomeIcon },
   { name: 'Calculator', href: '/calculatorA', icon: CalculatorIcon },
-  { name: 'List of Rooms', href: '/rooms', icon: BuildingOffice2Icon },
+  { name: 'List of Rooms', href: '/roomlist', icon: BuildingOffice2Icon },
   { name: 'Profile', href: '/adminprofile', icon: UserIcon },
   { name: 'Boarders information', href: '/boarders', icon: UsersIcon },
   { name: 'Bills', href: '/bills', icon: CreditCardIcon },

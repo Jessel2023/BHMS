@@ -95,16 +95,6 @@ const Login = () => {
               </div>
             </div>
 
-            <div className="flex justify-between text-sm text-gray-600 mb-6">
-              <label className="flex items-center">
-                <input type="checkbox" className="mr-2" />
-                Remember me
-              </label>
-              <a href="#" className="text-pink-600 hover:underline">
-                Forgot password?
-              </a>
-            </div>
-
             <button
               type="submit"
               className="w-full bg-black text-white py-2 rounded-lg hover:bg-gray-900 transition duration-200"
@@ -113,13 +103,6 @@ const Login = () => {
               {loading ? "Logging in..." : "Log in"}
             </button>
           </form>
-
-          <p className="mt-6 text-sm text-center text-gray-600">
-            Don’t have an account?{" "}
-            <a href="#" className="font-semibold text-pink-600 hover:underline">
-              Sign up
-            </a>
-          </p>
         </div>
       </div>
 

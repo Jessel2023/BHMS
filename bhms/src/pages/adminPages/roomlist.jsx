@@ -13,17 +13,18 @@ const RoomList = () => {
 
   const [newRoomData, setNewRoomData] = useState({
     room_number: '',
-    room_type: '', // Dropdown value for room type
+    room_type: '',
     capacity: '',
-    boarder_id: ''
+    status: ''
   });
 
   const [editRoomData, setEditRoomData] = useState({
     room_id: '',
     room_number: '',
-    room_type: '', // Dropdown value for room type
+    room_type: '',
     capacity: '',
-    boarder_id: ''
+    boarder_id: '',
+    status: ''
   });
 
   useEffect(() => {
@@ -44,29 +45,23 @@ const RoomList = () => {
     try {
       const response = await fetch('http://localhost/bhms/viewboarders.php');
       const data = await response.json();
-      if (Array.isArray(data)) {
-        setBoarders(data);
-      } else {
-        console.error('Boarders is not an array:', data);
-        setBoarders([]);
-      }
+      setBoarders(Array.isArray(data) ? data : []);
     } catch (err) {
       console.error('Failed to fetch boarders:', err);
       setBoarders([]);
     }
   };
 
-  const handleAddRoom = () => {
-    setShowAddRoomModal(true);
-  };
+  const handleAddRoom = () => setShowAddRoomModal(true);
 
   const handleEditRoom = (room) => {
     setEditRoomData({
       room_id: room.room_id,
       room_number: room.room_number,
-      room_type: room.room_type, // Update room_type with existing value
+      room_type: room.room_type,
       capacity: room.capacity,
       boarder_id: room.boarder_id,
+      status: room.status
     });
     setShowEditRoomModal(true);
   };
@@ -74,18 +69,8 @@ const RoomList = () => {
   const handleModalClose = () => {
     setShowAddRoomModal(false);
     setShowEditRoomModal(false);
-    setNewRoomData({
-      room_number: '',
-      room_type: '',
-      capacity: '',
-      boarder_id: ''
-    });
-    setEditRoomData({
-      room_number: '',
-      room_type: '',
-      capacity: '',
-      boarder_id: ''
-    });
+    setNewRoomData({ room_number: '', room_type: '', capacity: '', status: '' });
+    setEditRoomData({ room_number: '', room_type: '', capacity: '', boarder_id: '', status: '' });
   };
 
   const handleInputChange = (e) => {
@@ -99,22 +84,14 @@ const RoomList = () => {
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-
     if (showAddRoomModal) {
       try {
-        const response = await axios.post('http://localhost/bhms/managerooms/addroom.php', {
-          ...newRoomData
-        });
-
-        if (response.data.success) {
-          alert('Room added successfully');
-          fetchRooms();
-          handleModalClose();
-        } else {
-          alert(`Failed to add room: ${response.data.message}`);
-        }
+        const response = await axios.post('http://localhost/bhms/managerooms/addroom.php', newRoomData);
+        alert(response.data.success ? 'Room added successfully' : `Failed: ${response.data.message}`);
+        fetchRooms();
+        handleModalClose();
       } catch (error) {
-        console.error('Failed to add room', error);
+        console.error('Add room error', error);
         alert('Failed to add room');
       }
     } else if (showEditRoomModal) {
@@ -124,51 +101,37 @@ const RoomList = () => {
 
   const handleEditFormSubmit = async (e) => {
     e.preventDefault();
-
-    console.log("Submitting editRoomData:", editRoomData); // For debugging
-
-    if (!editRoomData.room_id) {
-      console.error('room_id is missing');
-      return;
-    }
-
     try {
       const response = await fetch(`http://localhost/bhms/managerooms/editroom.php?room_id=${editRoomData.room_id}`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(editRoomData),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(editRoomData)
       });
-
       if (response.ok) {
-        console.log('Room updated successfully');
         fetchRooms();
         setShowEditRoomModal(false);
       } else {
         console.error('Failed to update room');
       }
     } catch (error) {
-      console.error('Error updating room:', error);
+      console.error('Edit room error:', error);
     }
   };
 
   const handleDeleteRoom = async (roomId) => {
-    if (window.confirm('Are you sure you want to delete this room?')) {
+    if (window.confirm('Delete this room?')) {
       try {
         await axios.post('http://localhost/bhms/managerooms/deleteroom.php', { room_id: roomId });
-        alert('Room deleted successfully');
         fetchRooms();
       } catch (error) {
-        console.error('Failed to delete room', error);
-        alert('Failed to delete room');
+        console.error('Delete room error', error);
       }
     }
   };
 
   const getBoarderName = (id) => {
-    const boarder = boarders.find(b => b.boarder_id === id);
-    return boarder ? boarder.full_name : '';
+    const b = boarders.find(b => b.boarder_id === id);
+    return b ? b.full_name : '';
   };
 
   return (
@@ -206,9 +169,9 @@ const RoomList = () => {
                         <td>{room.capacity}</td>
                         <td>{getBoarderName(room.boarder_id)}</td>
                         <td>
-                          <span className={`badge ${room.occupancy === 'vacant' ? 'bg-success' : 'bg-danger'}`}>
-                            {room.occupancy === 'vacant' ? 'Available' : 'Occupied'}
-                          </span>
+                            <span className={`badge ${room.status === 'vacant' ? 'bg-success' : 'bg-danger'}`}>
+                              {room.status === 'vacant' ? 'Available' : 'Occupied'}
+                            </span>
                         </td>
                         <td>
                           <Button variant="outline-warning" size="sm" onClick={() => handleEditRoom(room)} className="me-2">Edit</Button>
@@ -237,14 +200,7 @@ const RoomList = () => {
 
               <Form.Group controlId="formRoomType" className="mt-3">
                 <Form.Label>Room Type</Form.Label>
-                <Form.Control
-                  as="select"
-                  name="room_type"
-                  value={newRoomData.room_type}
-                  onChange={handleInputChange}
-                  className="bg-dark text-white border-secondary"
-                  required
-                >
+                <Form.Control as="select" name="room_type" value={newRoomData.room_type} onChange={handleInputChange} className="bg-dark text-white border-secondary" required>
                   <option value="">-- Select Room Type --</option>
                   <option value="single">Single</option>
                   <option value="double">Double</option>
@@ -257,27 +213,16 @@ const RoomList = () => {
                 <Form.Control type="number" name="capacity" value={newRoomData.capacity} onChange={handleInputChange} className="bg-dark text-white border-secondary" required />
               </Form.Group>
 
-              <Form.Group controlId="formBoarderId" className="mt-3">
-                <Form.Label>Boarder</Form.Label>
-                <Form.Control
-                  as="select"
-                  name="boarder_id"
-                  value={newRoomData.boarder_id}
-                  onChange={handleInputChange}
-                  className="bg-gray-800 text-white border-secondary"
-                  required
-                >
-                  <option value="">-- Select Boarder --</option>
-                  {boarders.map((b) => (
-                    <option key={b.boarder_id} value={b.boarder_id} style={{ color: 'black' }}>
-                      {b.full_name}
-                    </option>
-                  ))}
+              <Form.Group controlId="formStatus" className="mt-3">
+                <Form.Label>Status</Form.Label>
+                <Form.Control as="select" name="status" value={newRoomData.status} onChange={handleInputChange} className="bg-dark text-white border-secondary" required>
+                  <option value="">-- Select Status --</option>
+                  <option value="available">Available</option>
+                  <option value="occupied">Occupied</option>
                 </Form.Control>
               </Form.Group>
 
               <Button variant="warning" type="submit" className="mt-3">Add Room</Button>
-
             </Form>
           </Modal.Body>
         </Modal>
@@ -296,14 +241,7 @@ const RoomList = () => {
 
               <Form.Group controlId="formRoomType" className="mt-3">
                 <Form.Label>Room Type</Form.Label>
-                <Form.Control
-                  as="select"
-                  name="room_type"
-                  value={editRoomData.room_type}
-                  onChange={handleInputChange}
-                  className="bg-dark text-white border-secondary"
-                  required
-                >
+                <Form.Control as="select" name="room_type" value={editRoomData.room_type} onChange={handleInputChange} className="bg-dark text-white border-secondary" required>
                   <option value="single">Single</option>
                   <option value="double">Double</option>
                   <option value="triple">Triple</option>
@@ -317,20 +255,19 @@ const RoomList = () => {
 
               <Form.Group controlId="formBoarderId" className="mt-3">
                 <Form.Label>Boarder</Form.Label>
-                <Form.Control
-                  as="select"
-                  name="boarder_id"
-                  value={editRoomData.boarder_id}
-                  onChange={handleInputChange}
-                  className="bg-dark text-white border-secondary"
-                  required
-                >
+                <Form.Control as="select" name="boarder_id" value={editRoomData.boarder_id} onChange={handleInputChange} className="bg-dark text-white border-secondary">
                   <option value="">-- Select Boarder --</option>
                   {boarders.map((b) => (
-                    <option key={b.boarder_id} value={b.boarder_id}>
-                      {b.full_name}
-                    </option>
+                    <option key={b.boarder_id} value={b.boarder_id}>{b.full_name}</option>
                   ))}
+                </Form.Control>
+              </Form.Group>
+
+              <Form.Group controlId="formStatus" className="mt-3">
+                <Form.Label>Status</Form.Label>
+                <Form.Control as="select" name="status" value={editRoomData.status} onChange={handleInputChange} className="bg-dark text-white border-secondary" required>
+                  <option value="available">Available</option>
+                  <option value="occupied">Occupied</option>
                 </Form.Control>
               </Form.Group>
 
@@ -338,7 +275,6 @@ const RoomList = () => {
             </Form>
           </Modal.Body>
         </Modal>
-
       </Container>
     </div>
   );
